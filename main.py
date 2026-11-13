@@ -23,8 +23,79 @@ def menu():
                     |___/                                          
          {reset}""")
     print("1. Калькулятор")
+    print("")
     print("2. Таблица")
+    print("")
+    print("3. Желаемая прибыль")
+    print("")
+    print("-----------------------------")
     print(f"0. {syperduperRED}Выход{reset}")
+    print("-----------------------------")
+
+
+def pribil():
+    while True:
+        Green = "\033[32m"
+        Cyan = "\033[36m"
+        reset = "\033[0m"
+        syperduperRED = "\033[1;31m"
+        YELLOW = "\033[33m"
+        Orange = "\033[38;2;255;100;0m"
+
+
+        komka_funpay = 0.12
+
+
+        while True:
+            try:
+                x = float(input("Привет, введи свою желаемую прибыль с товара! --- "))
+                break
+            except ValueError:
+                print(f"{syperduperRED}Ошибка! Введи число.{reset}")
+
+
+        while True:
+            try:
+                b = float(input("Теперь введи стоимость товара при закупке --- "))
+                break
+            except ValueError:
+                print(f"{syperduperRED}Ошибка! Введи число.{reset}")
+
+        while True:
+            komisia = input("Была ли комиссия при покупке товара? Да/Нет --- ").lower()
+            if komisia in ["да", "нет", "lf", "ytn"]:
+                break
+            else:
+                print(f"{syperduperRED}Пропиши еще раз!{reset}")
+
+        v_pokupki = 0.0
+        if komisia in ["да", "lf"]:
+            while True:
+                try:
+                    procent = float(input("Введи комиссию при покупке в процентах (например, 2) --- "))
+                    if procent >= 0:
+                        v_pokupki = procent / 100
+                        break
+                    else:
+                        print(f"{syperduperRED}Процент не может быть отрицательным!{reset}")
+                except ValueError:
+                    print(f"{syperduperRED}Ошибка! Введи число.{reset}")
+
+        sebestoimost = b + (b * v_pokupki)
+        itog_cena = (sebestoimost + x) / (1 - komka_funpay)
+        birzha_rub = itog_cena - (sebestoimost + x)
+
+        print(f"\n{Cyan}--- ИТОГ ---{reset}")
+        print(f"Реально ты потратил на закупку: {YELLOW}{sebestoimost:.2f} руб.{reset}")
+        print(f"Выставить на бирже нужно за: {Green}{itog_cena:.2f} руб.{reset}")
+        print(f"Биржа заберет свои 12%: {Orange}{birzha_rub:.2f} руб.{reset}")
+        print(f"Твоя чистая прибыль: {Green}{x:.2f} руб.{reset}")
+
+        eze = input(f"Посчитать еще один товар? {Green}Да{reset} / {syperduperRED}Нет{reset}").lower()
+        if eze.lower() == "нет":
+            print(f"{YELLOW}Удачи!{reset}")
+            return
+
 
 
 
@@ -50,9 +121,6 @@ def tablitci():
          print("-" * 60)
          input("Нажмите Enter, чтобы выйти...")
          return
-
-
-
 
 
 
@@ -155,9 +223,12 @@ while True:
 
     elif choice == "2":
      tablitci()
+    elif choice == "3":
+        pribil()
 
     elif choice == "0":
      print(f"{YELLOW}пока пока!{reset}")
      break
     else:
+         
          print("Выбери что-то из списка!")
