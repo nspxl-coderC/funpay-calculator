@@ -32,9 +32,12 @@ def menu():
     print(f"0. {syperduperRED}Выход{reset}")
     print("-----------------------------")
 
-
+#ета деф функция прибыль вся вайбкод тк я тупоголовый математек)) и нихуя не понял как ее сделать😭 (но доработки делал уже я 😈😈)
 def pribil():
     while True:
+
+        os.system('cls' if os.name == 'nt' else 'clear')
+
         Green = "\033[32m"
         Cyan = "\033[36m"
         reset = "\033[0m"
@@ -100,6 +103,9 @@ def pribil():
 
 
 def tablitci():
+
+     os.system('cls' if os.name == 'nt' else 'clear')
+
      Green = "\033[32m"
      Cyan = "\033[36m"
      reset = "\033[0m"
@@ -108,9 +114,10 @@ def tablitci():
      Orange = "\033[38;2;255;100;0m"
 
      if not history:
-         print("Привет! Твоя таблица пустая выполни расчеты в калькуляторе и возвращайся!")
-         input("Нажмите Enter, чтобы выйти...")
-         return
+         print(f"Привет! Твоя таблица {syperduperRED}пустая{reset} выполни расчеты в калькуляторе и возвращайся!")
+         print("--------------------")
+     input("Нажмите Enter, чтобы выйти... ")
+     return
 
 
 
@@ -147,29 +154,54 @@ def calculator():
 
 
 
-        nazvanie = input(f"ВВЕДИ {Cyan}НАЗВАНИЕ ТОВАРА{reset}")
+        nazvanie = input(f"ВВЕДИ {Cyan}НАЗВАНИЕ ТОВАРА{reset} --- ")
+
+        while True:
+            try:
+               x = float(input("Цена Продажи --- "))
+               break
+            except ValueError:
+                print("Напиши число! ")
 
 
-        x = float(input("Цена продажи на фп 14%"))
+
+        while True:
+            f = input("Комиссия продажи 14% или 12%? --- ")
+
+            if f in ["14", "12"]:
+                break
+            else:
+                print(f"{syperduperRED}Укажи 14 или 12{reset}")
+
+        if f == "14":
+            q = x * 0.14
+            d = x - q
+        else:
+            w = x * 0.12
+            d = x - w
+
+
 
 
         #x - цена продажи на фп
         #0.14 - комка на фп
         #y - фп комкой
-        #d - чистая прибыль после комок фп
-        #b - комка процент
-        #v - комка
-        #a - цена товара с комкой
+        #d - чистая прибыль после комисиий
+        #b - процент комисии закупки товара
+        #v - комииссия
+        #a - цена товара с комисиией
         #c - выгода без комки поставщика
         #z - цена закупки
 
 
-        y = x * 0.14
-
-        d = x - y
 
 
-        z = float(input("Цена закупки"))
+        while True:
+            try:
+                 z = float(input("Цена закупки"))
+                 break
+            except ValueError:
+                print("Напиши число! ")
 
         while True:
 
@@ -178,34 +210,55 @@ def calculator():
             if otvet in ["да", "нет", "lf", "ytn", "Да", "ДА", "НЕТ", "Нет", "YTN", "Ytn", "LF", "Lf"]:
                 break
             else:
-                print("ТОЧНО ПРОПИШИ ЭТО")
+                print(f"{syperduperRED}ТОЧНО ПРОПИШИ ЭТО{reset}")
 
 
 
-        if otvet.lower() == "да":
-            b = float(input("Ввведи число в виде десятичной дроби"))
-            v = z * b
-            a = z + v
-            print(f"{Cyan}{nazvanie}{reset} Выгода 1 шт  {Green}{d - a}{reset}")
+        if otvet.lower() in ['lf', 'да']:
+            while True:
+                try:
+                    b = float(input("Ввведи число! ( --- "))
+                    if b >=0:
+                        a = b / 100
+                        break
+                    else:
+                        print(f"{syperduperRED}Процент не может быть отрицательным! {reset}")
+                except ValueError:
+                    print("Введи число! ")
+
+            v = z * a
+            m = z + v
+            print(f"НАЗВАНИЕ ТОВАРА --- {Cyan}{nazvanie}{reset}")
+            print(f"ЦЕНА ПРОДАЖИ --- {Green}{x:.2f}{reset} ")
+            print(f"ЦЕНА ПОКУПКИ --- {YELLOW}{m:.2f}{reset}")
+            print(f"ВЫГОДА --- {Green}{d - m:.2f}{reset}")
+
 
         else :
             c = d - z
-            print(f"{Cyan}{nazvanie}{reset} Выгода 1 шт  {Green}{c}{reset}")
+            print(f"НАЗВАНИЕ ТОВАРА --- {Cyan}{nazvanie}{reset}")
+            print(f"ЦЕНА ПРОДАЖИ --- {Green}{x:.2f}{reset} ")
+            print(f"ЦЕНА ПОКУПКИ --- {YELLOW}{z:.2f}{reset}")
+            print(f"ВЫГОДА --- {Green}{c:.2f}{reset}")
 
-        a = 0
-        c = 0
+
 
         product_data = {
             "название товара": nazvanie,
             "цена": d,
-            "закупка": a if otvet in ["да", "lf", "ДА", "LF", "Lf"] else z,
-            "выгода": (d - a) if otvet in ["да", "lf", "ДА", "LF", "Lf"] else c
+            "закупка": m if otvet in ["да", "lf", "ДА", "LF", "Lf"] else z,
+            "выгода": (d - m) if otvet in ["да", "lf", "ДА", "LF", "Lf"] else c
         }
         history.append(product_data)
 
+        while True:
+            popitkodva = input(f"Посчитать еще один товар? {Green}Да{reset} / {syperduperRED}Нет{reset}").lower()
+            if popitkodva.lower() in ['ytn', 'нет', 'lf', 'да']:
+                break
+            else:
+                print("Напиши Да/Нет! ")
 
-        popitkodva = input(f"Посчитать еще один товар? {Green}Да{reset} / {syperduperRED}Нет{reset}").lower()
-        if popitkodva.lower() == "нет":
+        if popitkodva.lower() in ['ytn', 'нет']:
             print(f"{YELLOW}Удачи!{reset}")
             return
 
@@ -216,7 +269,7 @@ while True:
     reset = "\033[0m"
     YELLOW = "\033[33m"
     menu()
-    choice = input("Выбери раздел!")
+    choice = input("Выбери раздел! ")
 
     if choice == "1":
      calculator()
@@ -230,5 +283,5 @@ while True:
      print(f"{YELLOW}пока пока!{reset}")
      break
     else:
-         
+
          print("Выбери что-то из списка!")
